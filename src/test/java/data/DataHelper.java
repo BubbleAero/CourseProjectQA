@@ -1,45 +1,21 @@
 package data;
 
 import com.github.javafaker.Faker;
+import lombok.RequiredArgsConstructor;
+import lombok.Value;
+
+import java.time.LocalDate;
+import java.time.Year;
+import java.util.Locale;
 
 public class DataHelper {
-    private static Faker faker = new Faker();
+    public static Faker faker = new Faker(new Locale("en"));
 
-    public static String getApprovedCardNumber() {
-        return "1111 2222 3333 4444";
+    private DataHelper() {
     }
 
-    public static String getDeclinedCardNumber() {
-        return "5555 6666 7777 8888";
-    }
-
-    public static String generateHolderName() {
-        return faker.name().fullName();
-    }
-
-    public static String generateMonth() {
-        return String.format("%02d", faker.number().numberBetween(1, 12));
-    }
-
-    public static String generateYear() {
-        return String.valueOf(faker.number().numberBetween(2024, 2030));
-    }
-
-    public static String generateCVC() {
-        return String.format("%03d", faker.number().numberBetween(100, 999));
-    }
-
-    public static String generateRandomCardNumber() {
-        StringBuilder cardNumber = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            cardNumber.append(String.format("%04d", faker.number().numberBetween(1000, 9999)));
-            if (i < 3) {
-                cardNumber.append(" ");
-            }
-        }
-        return cardNumber.toString();
-    }
-
+    @Value
+    @RequiredArgsConstructor
     public static class CardInfo {
         private String cardNumber;
         private String month;
@@ -47,32 +23,126 @@ public class DataHelper {
         private String owner;
         private String cardCVC;
 
-        public CardInfo(String cardNumber, String month, String year, String owner, String cardCVC) {
-            this.cardNumber = cardNumber;
-            this.month = month;
-            this.year = year;
-            this.owner = owner;
-            this.cardCVC = cardCVC;
+
+        public static String getApprovedCardNumber() {
+            return ("1111 2222 3333 4444");
         }
 
-        public String getCardNumber() {
-            return cardNumber;
+        public static String getDeclinedCardNumber() {
+            return ("5555 6666 7777 8888");
         }
 
-        public String getMonth() {
-            return month;
+        public static String getUnknownCardNumber() {
+            return ("5555 6666 7777 9999");
         }
 
-        public String getYear() {
-            return year;
+        public static String getShortCardNumber() {
+            return ("5555 6666 7777");
         }
 
-        public String getOwner() {
-            return owner;
+        public static String getCardNumberWithSigns() {
+            return ("5555 6666 7777 ****");
         }
 
-        public String getCardCVC() {
-            return cardCVC;
+        public static String getCardNumberWithLetters() {
+            return ("5555 6666 7777 abcd");
+        }
+
+        public static String getValidMonth() {
+            LocalDate localDate = LocalDate.now();
+            return String.format("%02d", localDate.getMonthValue());
+        }
+
+        public static String getMonthOver12() {
+            return ("16");
+        }
+
+        public static String getMonthWithLetters() {
+            return ("hi");
+        }
+
+        public static String getMonthWithSigns() {
+            return ("#*");
+        }
+
+        public static String getMonthWithOneDigit() {
+            return ("1");
+        }
+
+        public static String getMonthWithNulls() {
+            return ("00");
+        }
+
+        public static String getValidYear() {
+            return String.format("%ty", Year.now());
+        }
+
+        public static String getPastYear() {
+            LocalDate localDate = LocalDate.now();
+            return String.format("y", localDate.minusYears(2));
+        }
+
+        public static String getYearWithLetters() {
+            return ("aw");
+        }
+
+        public static String getYearWithSigns() {
+            return ("&&");
+        }
+
+        public static String getYearWithOneDigit() {
+            return ("9");
+        }
+
+        public static String getOwnerName() {
+            return faker.name().fullName();
+        }
+
+        public static String getOwnerFirstName() {
+            return faker.name().firstName();
+        }
+
+        public static String getOwnerNameInRussia() {
+            Faker faker = new Faker(new Locale("ru"));
+            return faker.name().fullName();
+        }
+
+        public static String getOwnerNameWithDigits() {
+            return "1234 Ivan";
+        }
+
+        public static String getOwnerNameWithSigns() {
+            return "*** Ivan";
+        }
+
+        public static String getOwnerNameLong() {
+            return "Oooooooooooooooooooooooooooooooooooooooooooooooooo Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        }
+
+        public static String getOwnerNameShort() {
+            return "I";
+        }
+
+        public static String getOwnerNameWithDoubleName() {
+            return "Mary Saint-Petersburg";
+        }
+
+        public static String getCVC() {
+            return "234";
+        }
+
+        public static String getCVCwithLetters() {
+            return "abc";
+        }
+
+        public static String getCVCwithSigns() {
+            return "23=";
+        }
+
+        public static String getCVCshort() {
+            return "2";
         }
     }
+
+
 }

@@ -7,7 +7,8 @@ import data.DataHelper.CardInfo;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.*;
+import static com.codeborne.selenide.Selectors.byCssSelector;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class PaymentPage {
@@ -25,14 +26,13 @@ public class PaymentPage {
     private SelenideElement ownerError = $(byText("Владелец")).parent().$(".input__sub");
     private SelenideElement cvcError = $(byText("CVC/CVV")).parent().$(".input__sub");
 
-    public PaymentPage fillForm(CardInfo cardInfo) {
+    public void fillForm(CardInfo cardInfo) {
         cardNumber.setValue(cardInfo.getCardNumber());
         month.setValue(cardInfo.getMonth());
         year.setValue(cardInfo.getYear());
         owner.setValue(cardInfo.getOwner());
         cvc.setValue(cardInfo.getCardCVC());
         continueButton.click();
-        return this;
     }
 
     public void notFilledForm() {
@@ -44,15 +44,15 @@ public class PaymentPage {
         cvcError.shouldBe(visible);
     }
 
-    public void cardNumberErrorVisible(){
+    public void cardNumberErrorVisible() {
         cardNumberError.shouldBe(visible);
     }
 
-    public void monthErrorVisible(){
+    public void monthErrorVisible() {
         monthError.shouldBe(visible);
     }
 
-    public void yearErrorVisible(){
+    public void yearErrorVisible() {
         yearError.shouldBe(visible);
     }
 
@@ -60,11 +60,11 @@ public class PaymentPage {
         expiredCardError.shouldBe(visible);
     }
 
-    public void ownerErrorVisible(){
+    public void ownerErrorVisible() {
         ownerError.shouldBe(visible);
     }
 
-    public void cvcErrorVisible(){
+    public void cvcErrorVisible() {
         cvcError.shouldBe(visible);
     }
 
@@ -75,4 +75,5 @@ public class PaymentPage {
     public void declinedPayment() {
         $(byCssSelector("div.notification.notification_status_error.notification_has-closer.notification_stick-to_right.notification_theme_alfa-on-white")).shouldBe(Condition.visible, Duration.ofSeconds(20));
     }
+
 }
